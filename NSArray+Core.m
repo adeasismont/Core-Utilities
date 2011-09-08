@@ -3,6 +3,12 @@
 
 @implementation NSArray (Core)
 
++ (void)load
+{
+	[self alias:@selector(collect:) with:@selector(map:)];
+}
+
+
 - (void)performSelectorOnObjects:(SEL)aSelector
 {
 	[self performSelectorOnObjects:aSelector withObjects:nil];
@@ -41,6 +47,27 @@
 }
 
 
+- (NSArray*)collect:(id (^)(id obj))block
+{
+	NSMutableArray *array = [NSMutableArray array];
+	[self enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+		[array addObject:block(obj)];
+	}];
+	return [array freeze];
+}
+
+
+- (NSArray*)select:(BOOL (^)(id obj))block
+{
+	NSMutableArray *array = [NSMutableArray array];
+	[self enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+		if (block(obj))
+			[array addObject:obj];
+	}];
+	return [array freeze];
+}
+
+
 - (id)objectWithClass:(Class)class
 {
 	__block id object = nil;
@@ -62,7 +89,7 @@
 		if ([obj isKindOfClass:class])
 			[objects addObject:obj];
 	}];
-	return [[objects copy] autorelease];
+	return [objects freeze];
 }
 
 @end
