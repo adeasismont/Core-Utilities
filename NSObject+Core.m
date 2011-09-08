@@ -1,8 +1,8 @@
-#import "NSObject+CoreUtilities.h"
+#import "NSObject+Core.h"
 #import </usr/include/objc/objc-class.h>
 #import <execinfo.h>
 
-@implementation NSObject (CoreUtilities)
+@implementation NSObject (Core)
 
 + (void)swizzle:(SEL)originalSelector for:(SEL)newSelector
 {

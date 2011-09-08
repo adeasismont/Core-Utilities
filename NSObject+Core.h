@@ -1,5 +1,5 @@
 
-@interface NSObject (CoreUtilities)
+@interface NSObject (Core)
 
 // swizzle originalSelector for newSelector
 + (void)swizzle:(SEL)originalSelector for:(SEL)newSelector;
