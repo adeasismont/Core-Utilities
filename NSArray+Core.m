@@ -35,6 +35,12 @@
 }
 
 
+- (void)do:(void (^)(id obj))block
+{
+	[self enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) { block(obj); }];
+}
+
+
 - (id)objectWithClass:(Class)class
 {
 	__block id object = nil;
