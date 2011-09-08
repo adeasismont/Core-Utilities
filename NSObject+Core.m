@@ -103,4 +103,38 @@
 	}
 }
 
+
+- (id)performSelector:(SEL)aSelector withArguments:(id)firstArg, ...
+{
+	NSMutableArray *objects = [[NSMutableArray alloc] init];
+	id result;
+	va_list args;
+	va_start(args, firstArg);
+	for (id arg = firstArg; arg != nil; arg = va_arg(args, id))
+		[objects addObject:arg];
+	result = [self performSelector:aSelector withObjects:objects];
+	[objects release];
+	return result;
+}
+
+
+- (id)performSelector:(SEL)aSelector withObjects:(NSArray*)objects
+{
+	id result = nil;
+	NSMethodSignature *signature = [self methodSignatureForSelector:aSelector];
+	if (signature)
+	{
+		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+		[invocation setTarget:self];
+		[invocation setSelector:aSelector];
+		NSUInteger index = 2;
+		for (id argument in objects)
+			[invocation setArgument:argument atIndex:(index++)];
+		[invocation invoke];
+		if ([signature methodReturnLength])
+			[invocation getReturnValue:&result];
+	}
+	return result;
+}
+
 @end

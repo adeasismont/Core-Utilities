@@ -21,4 +21,8 @@
 // same as above but with a hint
 - (void)warnObsoleteMethodWithMessage:(NSString*)message;
 
+// -performSelector with an arbitrary number of arguments
+- (id)performSelector:(SEL)aSelector withArguments:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION;
+- (id)performSelector:(SEL)aSelector withObjects:(NSArray*)objects;
+
 @end
