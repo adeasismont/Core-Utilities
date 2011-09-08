@@ -137,4 +137,10 @@
 	return result;
 }
 
+
+- (id)freeze
+{
+	return [[self copy] autorelease];
+}
+
 @end

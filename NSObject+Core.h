@@ -25,4 +25,7 @@
 - (id)performSelector:(SEL)aSelector withArguments:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION;
 - (id)performSelector:(SEL)aSelector withObjects:(NSArray*)objects;
 
+// creates a immutable, autoreleased copy
+- (id)freeze;
+
 @end
